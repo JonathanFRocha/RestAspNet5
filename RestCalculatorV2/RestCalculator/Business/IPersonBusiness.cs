@@ -1,9 +1,9 @@
 ﻿using RestCalculator.Model;
 using System.Collections.Generic;
 
-namespace RestPerson.Services.Implementations
+namespace RestPerson.Business
 {
-    public interface IPersonService
+    public interface IPersonBusiness
     {
         Person Create(Person person);
         Person FindById(long id);
