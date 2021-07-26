@@ -11,7 +11,7 @@ using RestCalculator.Model;
 namespace RestCalculator.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
 
