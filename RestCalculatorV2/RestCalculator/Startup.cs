@@ -95,7 +95,7 @@ namespace RestCalculator
                 };
                 evolve.Migrate();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log.Error("Database migration failed: ", ex);
                 throw;
