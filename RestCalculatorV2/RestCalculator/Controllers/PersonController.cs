@@ -50,7 +50,7 @@ namespace RestCalculator.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Update(long id)
+        public IActionResult Delete(long id)
         {
             Person person = _personBusiness.FindById(id);
             if (person == null) return NotFound();
