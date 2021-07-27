@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestPerson.Business;
+using RestPerson.Data.VO;
 using RestPerson.Model;
 using System;
 using System.Collections.Generic;
@@ -32,20 +33,20 @@ namespace RestPerson.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            Book book = _bookBusiness.FindById(id);
+            BookVO book = _bookBusiness.FindById(id);
             if (book == null) return NotFound();
             return Ok(book);
         }
         
         [HttpPost]
-        public IActionResult Post([FromBody] Book book)
+        public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
             return Ok(_bookBusiness.Create(book));
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Book book)
+        public IActionResult Update([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
             return Ok(_bookBusiness.Update(book));
@@ -55,7 +56,7 @@ namespace RestPerson.Controllers
 
         public IActionResult Delete(long id)
         {
-            Book book = _bookBusiness.FindById(id);
+            BookVO book = _bookBusiness.FindById(id);
             if (book == null) return NotFound();
             _bookBusiness.Delete(id);
             return NoContent();

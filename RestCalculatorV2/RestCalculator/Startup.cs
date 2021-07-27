@@ -8,11 +8,9 @@ using Microsoft.OpenApi.Models;
 using RestPerson.Model.Context;
 using RestPerson.Business;
 using RestPerson.Business.Implementations;
-using RestPerson.Repository.Implementations;
 using RestPerson.Repository;
 using Serilog;
 using System;
-using Pomelo.EntityFrameworkCore;
 using System.Collections.Generic;
 using RestPerson.Repository.Generic;
 

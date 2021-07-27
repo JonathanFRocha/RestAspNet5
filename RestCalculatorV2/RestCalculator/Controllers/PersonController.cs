@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RestCalculator.Model;
 using RestPerson.Business;
+using RestPerson.Data.VO;
 
 namespace RestCalculator.Controllers
 {
@@ -30,20 +31,20 @@ namespace RestCalculator.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            Person person = _personBusiness.FindById(id);
+            PersonVO person = _personBusiness.FindById(id);
             if (person == null) return NotFound();
             return Ok(person);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             return Ok(_personBusiness.Create(person));
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Person person)
+        public IActionResult Update([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             return Ok(_personBusiness.Update(person));
@@ -52,7 +53,7 @@ namespace RestCalculator.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            Person person = _personBusiness.FindById(id);
+            PersonVO person = _personBusiness.FindById(id);
             if (person == null) return NotFound();
             _personBusiness.Delete(id);
             return NoContent();
