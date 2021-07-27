@@ -7,8 +7,8 @@ namespace RestPerson.Business.Implementations
 {
     public class BookBusinessImplementation : IBookBusiness
     {
-        private readonly IBookRepository _bookRepository;
-        public BookBusinessImplementation(IBookRepository bookRepository)
+        private readonly IRepository<Book> _bookRepository;
+        public BookBusinessImplementation(IRepository<Book> bookRepository)
         {
             _bookRepository = bookRepository;
         }

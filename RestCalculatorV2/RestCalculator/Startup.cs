@@ -14,6 +14,7 @@ using Serilog;
 using System;
 using Pomelo.EntityFrameworkCore;
 using System.Collections.Generic;
+using RestPerson.Repository.Generic;
 
 namespace RestCalculator
 {
@@ -54,9 +55,8 @@ namespace RestCalculator
 
             services.AddApiVersioning();
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+            services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<> ));
         }
 
 
