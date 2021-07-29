@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RestCalculator.Model;
 using RestPerson.Business;
 using RestPerson.Data.VO;
+using RestPerson.Hypermedia.Filters;
 
 namespace RestCalculator.Controllers
 {
@@ -23,12 +24,14 @@ namespace RestCalculator.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
         }   
         
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             PersonVO person = _personBusiness.FindById(id);
@@ -37,6 +40,7 @@ namespace RestCalculator.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -44,6 +48,7 @@ namespace RestCalculator.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Update([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();

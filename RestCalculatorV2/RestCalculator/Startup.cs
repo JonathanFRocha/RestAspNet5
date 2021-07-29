@@ -13,6 +13,9 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using RestPerson.Repository.Generic;
+using System.Net.Http.Headers;
+using RestPerson.Hypermedia.Filters;
+using RestPerson.Hypermedia.Enricher;
 
 namespace RestCalculator
 {
@@ -37,7 +40,7 @@ namespace RestCalculator
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestCalculator", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rest API aspnetcore", Version = "v1" });
             });
           
             services.AddDbContext<MySQLContext>(options =>
@@ -45,6 +48,19 @@ namespace RestCalculator
                 
                 options.UseMySql(connection, ServerVersion.AutoDetect(connection));
             });
+
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml").ToString());
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json").ToString());
+            }).AddXmlSerializerFormatters();
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+            filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
+
+            services.AddSingleton(filterOptions);
 
             if (Environment.IsDevelopment())
             {
@@ -78,10 +94,8 @@ namespace RestCalculator
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
-
-
-
         }
         private void MigrateDatabase(string connection)
         {

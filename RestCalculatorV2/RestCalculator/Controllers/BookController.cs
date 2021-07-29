@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RestPerson.Business;
 using RestPerson.Data.VO;
+using RestPerson.Hypermedia.Filters;
 using RestPerson.Model;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,14 @@ namespace RestPerson.Controllers
         }
         
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_bookBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             BookVO book = _bookBusiness.FindById(id);
@@ -39,6 +42,7 @@ namespace RestPerson.Controllers
         }
         
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -46,6 +50,7 @@ namespace RestPerson.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Update([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -53,7 +58,6 @@ namespace RestPerson.Controllers
         }
 
         [HttpDelete("{id}")]
-
         public IActionResult Delete(long id)
         {
             BookVO book = _bookBusiness.FindById(id);
