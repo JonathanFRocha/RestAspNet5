@@ -16,6 +16,7 @@ using RestPerson.Repository.Generic;
 using System.Net.Http.Headers;
 using RestPerson.Hypermedia.Filters;
 using RestPerson.Hypermedia.Enricher;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace RestCalculator
 {
@@ -35,12 +36,19 @@ namespace RestCalculator
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rest API aspnetcore", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rest API aspnetcore", Version = "v1", Description = "RESTful API" });
             });
           
             services.AddDbContext<MySQLContext>(options =>
@@ -80,9 +88,12 @@ namespace RestCalculator
         {
             if (env.IsDevelopment())
             {
+                var option = new RewriteOptions();
+                option.AddRedirect("^$", "swagger");
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestCalculator v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rest API aspnetcore v1"));
+                app.UseRewriter(option);
             }
 
             app.UseHttpsRedirection();
@@ -90,7 +101,7 @@ namespace RestCalculator
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

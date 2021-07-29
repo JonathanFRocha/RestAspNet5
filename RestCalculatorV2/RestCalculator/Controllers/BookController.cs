@@ -26,6 +26,10 @@ namespace RestPerson.Controllers
         }
         
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -33,6 +37,10 @@ namespace RestPerson.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
@@ -42,6 +50,9 @@ namespace RestPerson.Controllers
         }
         
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BookVO book)
         {
@@ -50,6 +61,9 @@ namespace RestPerson.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Update([FromBody] BookVO book)
         {
@@ -58,6 +72,9 @@ namespace RestPerson.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType((204), Type = typeof(PersonVO))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         public IActionResult Delete(long id)
         {
             BookVO book = _bookBusiness.FindById(id);
